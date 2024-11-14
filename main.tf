@@ -23,7 +23,7 @@ resource "aws_shield_protection_group" "this" {
   aggregation         = each.value.aggregation
   pattern             = each.value.pattern
   resource_type       = each.value.resource_type
-  members             = try([var.resource_arn], [])
+  members             = (each.value.pattern == "ARBITARY" ? try([var.resource_arn], []) : null)
   tags = merge(
     local.tags,
     var.tags
